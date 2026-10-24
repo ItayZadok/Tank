@@ -4,14 +4,24 @@
 
 package frc.robot;
 
+import com.spikes2212.command.drivetrains.tankdrivetrains.TankDrivetrain;
+import com.spikes2212.command.drivetrains.tankdrivetrains.commands.DriveTank;
+import com.spikes2212.util.smartmotorcontrollers.TalonFXWrapper;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
+    private TankDrivetrain tankDrivetrain;
+
     @Override
     public void robotInit() {
-
+        tankDrivetrain = new TankDrivetrain(
+                new TalonFXWrapper(RobotMap.CAN.LEFT_MASTER),
+                new TalonFXWrapper(RobotMap.CAN.LEFT_SLAVE),
+                new TalonFXWrapper(RobotMap.CAN.RIGHT_MASTER),
+                new TalonFXWrapper(RobotMap.CAN.RIGHT_SLAVE)
+        );
     }
 
     @Override
@@ -41,7 +51,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
+        OI oi = new OI();
+        CommandScheduler.getInstance().schedule(new DriveTank(tankDrivetrain, oi::getLeftY, oi::getRightY));
     }
 
     @Override

@@ -4,6 +4,10 @@ public class RobotMap {
 
     public interface CAN {
 
+        int RIGHT_SLAVE = -1;
+        int RIGHT_MASTER = -1;
+        int LEFT_SLAVE = -1;
+        int LEFT_MASTER = -1;
     }
 
     public interface DIO {
